@@ -15,9 +15,18 @@ jobs:
     - name: Set up Docker BuildKit
       uses: docker/setup-buildx-action@v2
 
+    - name: Cache Docker layers
+      uses: actions/cache@v3
+      with:
+        path: |
+          ~/.docker/buildx-cache
+        key: ${{ runner.os }}-docker-${{ github.sha }}
+        restore-keys: |
+          ${{ runner.os }}-docker-
+
     - name: Build Docker image
       run: |
-        docker build -t my-playwright-tests .
+        docker build --build-arg CACHEBUST=${{ github.run_id }} -t my-playwright-tests .
 
     - name: Run Playwright tests in Docker container
       run: |
