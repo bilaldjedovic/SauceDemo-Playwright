@@ -20,11 +20,11 @@ jobs:
 
     - name: Pull Docker image from Docker Hub
       run: |
-        docker pull ${{ secrets.DOCKER_HUB_USERNAME }}/my-playwright-tests:latest
+        docker pull bilaldjedovic/playwrighttest:latest
 
     - name: Run Playwright tests in Docker container
       run: |
-        docker run --rm ${{ secrets.DOCKER_HUB_USERNAME }}/my-playwright-tests:latest
+        docker run --rm bilaldjedovic/playwrighttest:latest
 
     - uses: actions/upload-artifact@v3
       if: always()
