@@ -19,14 +19,14 @@ jobs:
       uses: actions/cache@v3
       with:
         path: |
-          ~/.docker/buildx-cache
+          ~/.cache/docker
         key: ${{ runner.os }}-docker-${{ github.sha }}
         restore-keys: |
           ${{ runner.os }}-docker-
 
     - name: Build Docker image
       run: |
-        docker build --build-arg CACHEBUST=${{ github.run_id }} -t my-playwright-tests .
+        docker buildx build --cache-from=type=local,src=~/.cache/docker --cache-to=type=local,dest=~/.cache/docker --tag my-playwright-tests .
 
     - name: Run Playwright tests in Docker container
       run: |
@@ -36,5 +36,5 @@ jobs:
       if: always()
       with:
         name: playwright-report
-        path: playwright-report/
+        path: /app/playwright-report/
         retention-days: 30
