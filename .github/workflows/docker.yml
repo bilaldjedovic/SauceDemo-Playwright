@@ -9,45 +9,23 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v3
-
-    # Set up Docker Buildx for caching
-    - name: Set up Docker Buildx
-      uses: docker/setup-buildx-action@v2
-
-    # Cache Docker layers to speed up subsequent builds
-    - name: Cache Docker layers
-      id: cache-docker-layers
-      uses: actions/cache@v3
-      with:
-        path: /tmp/.buildx-cache
-        key: ${{ runner.os }}-docker-${{ github.sha }}
-        restore-keys: |
-          ${{ runner.os }}-docker-
-
-    # Log in to Docker Hub to pull the image
     - name: Log in to Docker Hub
       uses: docker/login-action@v2
       with:
         username: ${{ secrets.DOCKER_HUB_USERNAME }}
         password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
 
-    # Pull the image from Docker Hub (or build if not available)
-    - name: Pull Docker image or build with cache
+    - name: Pull Docker image from Docker Hub
       run: |
-        docker pull bilaldjedovic/playwrighttest:latest || \
-        docker build --cache-from=type=local,src=/tmp/.buildx-cache -t bilaldjedovic/playwrighttest:latest .
+        docker pull bilaldjedovic/playwrighttest:latest
 
-    # Run Playwright tests
     - name: Run Playwright tests in Docker container
       run: |
         docker run --rm bilaldjedovic/playwrighttest:latest
 
-    # Upload the Playwright report
     - name: Upload Playwright report
-      if: always()
       uses: actions/upload-artifact@v3
+      if: always()
       with:
         name: playwright-report
         path: /app/playwright-report/
