@@ -14,7 +14,7 @@ RUN npm install
 COPY . .
 
 # Run Playwright install to download the browsers
-RUN npx playwright install chromium
+RUN npx playwright install 
 
 # Expose any necessary ports (if applicable)
 EXPOSE 3000

@@ -13,7 +13,7 @@ jobs:
     - name: Install dependencies
       run: npm ci
     - name: Install Playwright Browsers
-      run: npx playwright install chromium
+      run: npx playwright install 
     - name: Run Playwright tests in regression directory 
       run: npx playwright test tests/regression
     - uses: actions/upload-artifact@v3
