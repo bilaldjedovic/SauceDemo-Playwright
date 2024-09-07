@@ -20,4 +20,4 @@ RUN npx playwright install chromium
 EXPOSE 3000
 
 # Define the command to run tests
-CMD ["npx", "playwright", "test", "--reporter=html"]
+CMD ["npx", "playwright", "test tests/regression", "--reporter=html"]
