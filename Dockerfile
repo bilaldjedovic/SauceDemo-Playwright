@@ -22,4 +22,4 @@ RUN npx playwright install --with-deps && \
 EXPOSE 3000
 
 # Define the command to run tests
-CMD ["npx", "playwright", "test", "--reporter=list"]
+CMD ["npx", "playwright", "test", "--reporter=list", "--workers=4"]
