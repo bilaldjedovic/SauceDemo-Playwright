@@ -15,14 +15,29 @@ jobs:
         username: ${{ secrets.DOCKER_HUB_USERNAME }}
         password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
 
+    - name: Install Docker Compose
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y docker-compose
+
     - name: Pull Docker image from Docker Hub
       run: |
         docker pull bilaldjedovic/playwrighttest:latest
 
+    - name: Set up Docker Compose
+      run: |
+        echo 'version: "3"
+        services:
+          playwright:
+            image: bilaldjedovic/playwrighttest:latest
+            volumes:
+              - ./playwright-report:/app/playwright-report
+            command: npx playwright test --workers=4
+        ' > docker-compose.yml
+
     - name: Run Playwright tests in parallel using Docker Compose
       run: |
-        docker-compose up  
-
+        docker-compose up --abort-on-container-exit
 
     - name: Upload Playwright report
       uses: actions/upload-artifact@v3
@@ -31,6 +46,3 @@ jobs:
         name: playwright-report
         path: /app/playwright-report/
         retention-days: 30
-
-
-        
