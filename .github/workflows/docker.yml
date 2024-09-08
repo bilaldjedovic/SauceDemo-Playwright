@@ -21,7 +21,7 @@ jobs:
 
     - name: Run Playwright tests in parallel using Docker Compose
       run: |
-        docker-compose up --scale playwright=4  
+        docker-compose up --scale playwright=7  
 
 
     - name: Upload Playwright report
