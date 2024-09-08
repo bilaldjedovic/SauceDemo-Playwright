@@ -32,7 +32,7 @@ jobs:
             image: bilaldjedovic/playwrighttest:latest
             volumes:
               - ./playwright-report:/app/playwright-report
-            command: npx playwright test --workers=4
+            command: npx playwright test --workers=7
         ' > docker-compose.yml
 
     - name: Run Playwright tests in parallel using Docker Compose

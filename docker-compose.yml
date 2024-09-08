@@ -4,4 +4,4 @@ services:
     image: bilaldjedovic/playwrighttest:latest
     volumes:
       - ./playwright-report:/app/playwright-report
-    command: npx playwright test --workers=7
+    command: npx playwright test --project=chromium --workers=7
