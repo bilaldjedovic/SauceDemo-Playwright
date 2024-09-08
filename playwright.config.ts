@@ -5,8 +5,8 @@ export default defineConfig({
   expect: {
     timeout: 20000
   },
+  workers: process.env.CI ? 4 : undefined,  // Use 4 workers for CI, defaults to available CPUs locally
 
-  // Conditionally enable reporters based on an environment variable
   reporter: process.env.CI ? 'list' : [['html', { outputFolder: 'playwright-report', open: 'never' }]],
 
   use: {

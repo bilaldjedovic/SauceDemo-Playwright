@@ -1,4 +1,4 @@
-name: Dockerized Smoke Tests
+name: Dockerized Playwright Tests
 
 on:
   push:
@@ -19,9 +19,10 @@ jobs:
       run: |
         docker pull bilaldjedovic/playwrighttest:latest
 
-    - name: Run Playwright tests in Docker container
+    - name: Run Playwright tests in parallel using Docker Compose
       run: |
-        docker run --rm bilaldjedovic/playwrighttest:latest
+        docker-compose up --scale playwright=4  
+
 
     - name: Upload Playwright report
       uses: actions/upload-artifact@v3
@@ -30,3 +31,6 @@ jobs:
         name: playwright-report
         path: /app/playwright-report/
         retention-days: 30
+
+
+        

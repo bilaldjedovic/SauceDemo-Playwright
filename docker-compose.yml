@@ -1,0 +1,7 @@
+version: '3'
+services:
+  playwright:
+    image: bilaldjedovic/playwrighttest:latest
+    volumes:
+      - ./playwright-report:/app/playwright-report
+    command: npx playwright test --workers=7

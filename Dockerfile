@@ -7,11 +7,8 @@ WORKDIR /app
 # Copy only the package files first
 COPY package*.json ./
 
-# Install dependencies
-RUN npm install && \
-    # Clean up to reduce image size
-    npm cache clean --force && \
-    rm -rf /root/.npm
+RUN npm ci --ignore-scripts  # Use ci for faster, production-like installs
+
 
 # Copy the rest of the application code to the container
 COPY . .
